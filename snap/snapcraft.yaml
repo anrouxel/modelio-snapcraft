@@ -23,7 +23,7 @@ layout:
     bind: $SNAP_DATA/var/cache/fontconfig
 
 apps:
-  logisim-snapcraft:
+  modelio-snapcraft:
     extensions: [gnome]
     command: usr/lib/jvm/java-17-openjdk-$CRAFT_TARGET_ARCH/bin/java -jar $SNAP/logisim/logisim.jar
     environment:
@@ -43,47 +43,7 @@ apps:
       - x11
       - unity7
 
-parts:
-  maven:
-    plugin: nil
-    source: https://github.com/apache/maven.git
-    source-type: git
-    override-pull: |
-      craftctl default
-      git checkout "$(git describe --tags `git rev-list --tags --max-count=1`)" -b latest
-    override-build: |
-      # Gets the host and port from a proxy URL
-      #   $1 = the proxy URL, such as "http://10.10.10.1:8222/"
-      getproxy () {
-          # Parses URL with Bash or Dash shell parameter expansion
-          tail=${1#http*://}
-          head=${tail%%/*}
-          host=${head%:*}
-          port=${head##*:}
-      }
-      # Sets Java networking properties when using a proxy server
-      proxies=""
-      if [ -n "${http_proxy:-}" ]; then
-          getproxy "$http_proxy"
-          proxies="-Dhttp.proxyHost=$host -Dhttp.proxyPort=$port"
-      fi
-      if [ -n "${https_proxy:-}" ]; then
-          getproxy "$https_proxy"
-          proxies="$proxies -Dhttps.proxyHost=$host -Dhttps.proxyPort=$port"
-      fi
-      # Builds Maven
-      export MAVEN_OPTS="$proxies"
-      export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-$CRAFT_TARGET_ARCH
-      export PATH=${JAVA_HOME}/bin:${PATH}
-      mvn -DdistributionTargetDir="/usr/share/apache-maven" \
-        --batch-mode --strict-checksums --quiet --show-version \
-        package
-    build-packages:
-      - git
-      - sed
-      - maven
-      - openjdk-11-jdk
-  
+parts:  
   modelio-snapcraft:
     after:
       - maven
@@ -118,13 +78,12 @@ parts:
       # Builds Maven
       export MAVEN_OPTS="$proxies"
       export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-$CRAFT_TARGET_ARCH
-      export M2_HOME=/usr/share/apache-maven
-      export MAVEN_HOME=/usr/share/apache-maven
-      export PATH=${JAVA_HOME}/bin:${M2_HOME}/bin:${PATH}
+      export PATH=${JAVA_HOME}/bin:${PATH}
       mvn --show-version package
     build-packages:
       - git
       - sed
+      - maven
       - openjdk-17-jdk
       - libfontconfig1-dev
     stage-packages:

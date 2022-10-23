@@ -1,6 +1,6 @@
 name: modelio-snapcraft
 license: GPL-3.0
-summary: Modelio is a modeling solution offering a wide range of functionalities based on the main standards of enterprise architecture, software development and systems engineering.
+summary: Modelio
 description: |
   Github (compilation) : https://github.com/anrouxel/modelio-snapcraft
   Github (source) : https://github.com/ModelioOpenSource/Modelio

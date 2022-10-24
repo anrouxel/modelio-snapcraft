@@ -84,10 +84,10 @@ parts:
       - git
       - sed
       - maven
-      - openjdk-17-jdk
+      - openjdk-11-jdk
       - libfontconfig1-dev
     stage-packages:
-      - openjdk-17-jre
+      - openjdk-11-jre
       - fonts-freefont-ttf
       - fonts-arphic-uming
       - fontconfig-config

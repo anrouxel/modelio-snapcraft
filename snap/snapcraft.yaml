@@ -77,7 +77,7 @@ parts:
       fi
       # Builds Maven
       export MAVEN_OPTS="$proxies"
-      export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-$CRAFT_TARGET_ARCH
+      export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-$CRAFT_TARGET_ARCH
       export PATH=${JAVA_HOME}/bin:${PATH}
       mvn --show-version package
     build-packages:

@@ -77,17 +77,17 @@ parts:
       fi
       # Builds Maven
       export MAVEN_OPTS="$proxies"
-      export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-$CRAFT_TARGET_ARCH
+      export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-$CRAFT_TARGET_ARCH
       export PATH=${JAVA_HOME}/bin:${PATH}
       mvn --show-version package
     build-packages:
       - git
       - sed
       - maven
-      - openjdk-11-jdk
+      - openjdk-8-jdk
       - libfontconfig1-dev
     stage-packages:
-      - openjdk-11-jre
+      - openjdk-8-jre
       - fonts-freefont-ttf
       - fonts-arphic-uming
       - fontconfig-config

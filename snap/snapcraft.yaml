@@ -45,8 +45,6 @@ apps:
 
 parts:  
   modelio-snapcraft:
-    after:
-      - maven
     plugin: nil
     source: https://github.com/ModelioOpenSource/Modelio.git
     source-type: git

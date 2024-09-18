@@ -1,0 +1,55 @@
+name: modelio
+version: 5.4.1
+summary: Digital logic design tool and simulator
+description: |
+  Digital logic design tool and simulator
+icon: snap/gui/logisim-icon-128.png
+license: GPL-3.0
+
+base: core24
+grade: stable
+confinement: strict
+adopt-info: modelio
+compression: lzo
+
+platforms:
+  amd64:
+
+layout:
+  /etc/fonts:
+    bind: $SNAP/etc/fonts
+  /usr/share/fonts:
+    bind: $SNAP/usr/share/fonts
+  /var/cache/fontconfig:
+    bind: $SNAP_DATA/var/cache/fontconfig
+
+
+apps:
+  modelio:
+    extensions: [gnome]
+    command: modelio
+    environment:
+      _JAVA_OPTIONS: "-Duser.home=$SNAP_USER_DATA"
+      XDG_DATA_HOME: $SNAP/usr/share
+      FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
+      FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
+
+    plugs:
+      - desktop
+      - desktop-legacy
+      - gsettings
+      - home
+      - opengl
+      - unity7
+      - wayland
+      - x11
+
+
+parts:     
+  modelio:
+    plugin: dump
+    source: https://github.com/ModelioOpenSource/Modelio/releases/download/v$SNAPCRAFT_PROJECT_VERSION/modelio-open-source-5.4.1_amd64.deb
+    source-type: deb
+    override-build: |
+      craftctl default
+      ln -s $SNAPCRAFT_PART_INSTALL/usr/lib/modelio-open-source*/modelio $SNAPCRAFT_PART_INSTALL/modelio

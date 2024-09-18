@@ -1,0 +1,48 @@
+name: Update
+
+on:
+  # Runs at 10:00 UTC every day
+  schedule:
+    - cron:  '0 10 * * *'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    name: 🔄 Sync version with upstream
+    environment: "Edge Branch"
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔄 Sync version with upstream
+        uses: snapcrafters/ci/sync-version@main
+        with:
+          branch: main
+          token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
+          update-script: |
+            VERSION=$(
+              curl -sL https://api.github.com/repos/logisim-evolution/logisim-evolution/releases | 
+              jq .  | grep tag_name | grep -v beta | head -n 1 | cut -d'"' -f4 | tr -d 'v'
+            )
+            sed -i 's/^\(version: \).*$/\1'"$VERSION"'/' snap/snapcraft.yaml
+
+            # If the signal-desktop version has changed, bump the dependencies.
+            if ! git diff --quiet --exit-code; then
+              # Fetch the upstream build.gradle.kts for the fetched version
+              wget -qO build.gradle.kts https://raw.githubusercontent.com/logisim-evolution/logisim-evolution/v${VERSION}/build.gradle.kts
+
+              # Check and update Java version
+              JAVA_VERSION=$(grep 'sourceCompatibility' build.gradle.kts | grep -o "JavaVersion.VERSION_[0-9]\+" | grep -o "[0-9]\+")
+
+              # Update openjdk dependencies dynamically
+              sed -i 's/openjdk-[0-9]\+-jdk/openjdk-'"$JAVA_VERSION"'-jdk/' snap/snapcraft.yaml
+              sed -i 's/openjdk-[0-9]\+-jre/openjdk-'"$JAVA_VERSION"'-jre/' snap/snapcraft.yaml
+
+              # Update the command line in snapcraft.yaml
+              sed -i 's|usr/lib/jvm/java-[0-9]\+-openjdk-\$CRAFT_ARCH_BUILD_FOR/bin/java|usr/lib/jvm/java-'"$JAVA_VERSION"'-openjdk-\$CRAFT_ARCH_BUILD_FOR/bin/java|' snap/snapcraft.yaml
+
+              rm build.gradle.kts
+            fi

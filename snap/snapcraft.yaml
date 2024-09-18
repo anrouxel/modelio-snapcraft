@@ -23,13 +23,11 @@ layout:
   /var/cache/fontconfig:
     bind: $SNAP_DATA/var/cache/fontconfig
 
-
 apps:
   modelio:
     extensions: [gnome]
     command: modelio
     environment:
-      _JAVA_OPTIONS: "-Duser.home=$SNAP_USER_DATA"
       XDG_DATA_HOME: $SNAP/usr/share
       FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
       FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
@@ -48,8 +46,9 @@ apps:
 parts:     
   modelio:
     plugin: dump
-    source: https://github.com/ModelioOpenSource/Modelio/releases/download/v$SNAPCRAFT_PROJECT_VERSION/modelio-open-source-5.4.1_amd64.deb
+    source: https://github.com/ModelioOpenSource/Modelio/releases/download/v$SNAPCRAFT_PROJECT_VERSION/modelio-open-source-$SNAPCRAFT_PROJECT_VERSION_amd64.deb
     source-type: deb
     override-build: |
       craftctl default
-      ln -s $SNAPCRAFT_PART_INSTALL/usr/lib/modelio-open-source*/modelio $SNAPCRAFT_PART_INSTALL/modelio
+      cd $SNAPCRAFT_PART_INSTALL
+      ln -s usr/lib/modelio-open-source*/modelio modelio

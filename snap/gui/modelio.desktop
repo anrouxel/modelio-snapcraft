@@ -2,7 +2,7 @@
 Version=1.0
 Type=Application
 Terminal=false
-Exec=modelio-snapcraft
+Exec=modelio
 Icon=${SNAP}/meta/gui/modelio.png
 Categories=Science;Education;
 Name=Modelio

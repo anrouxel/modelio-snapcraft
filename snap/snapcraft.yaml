@@ -51,4 +51,4 @@ parts:
     override-build: |
       craftctl default
       cd $SNAPCRAFT_PART_INSTALL
-      ln -s usr/lib/modelio-open-source*/modelio modelio
+      ln -s usr/lib/modelio-open-source*/modelio.sh modelio

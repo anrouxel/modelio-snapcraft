@@ -31,7 +31,7 @@ apps:
       XDG_DATA_HOME: $SNAP/usr/share
       FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
       FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
-
+      MODELIO_LOG_PATH: $SNAP_USER_DATA/.modelio
     plugs:
       - desktop
       - desktop-legacy

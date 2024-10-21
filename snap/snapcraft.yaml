@@ -26,7 +26,7 @@ layout:
 apps:
   modelio:
     extensions: [gnome]
-    command: modelio -configuration $SNAP_USER_DATA/.modelio/config
+    command: modelio -configuration $SNAP_USER_DATA/.modelio
     environment:
       XDG_DATA_HOME: $SNAP/usr/share
       FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
@@ -41,13 +41,21 @@ apps:
       - unity7
       - wayland
       - x11
-
+      - dbus
+      - network
 
 parts:     
   modelio:
     plugin: dump
     source: https://github.com/ModelioOpenSource/Modelio/releases/download/v$SNAPCRAFT_PROJECT_VERSION/modelio-open-source-$SNAPCRAFT_PROJECT_VERSION_amd64.deb
     source-type: deb
+    stage-packages:
+      - libproxy1-plugin-gsettings
+      - libproxy1-plugin-networkmanager
+      - libatk-adaptor
+      - libgtk-3-0
+      - libproxy1v5  # Ajout pour corriger l'erreur libproxy
+      - libproxy-tools
     override-build: |
       craftctl default
       cd $SNAPCRAFT_PART_INSTALL

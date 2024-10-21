@@ -26,12 +26,11 @@ layout:
 apps:
   modelio:
     extensions: [gnome]
-    command: modelio
+    command: modelio -Duser.home=$SNAP_USER_DATA
     environment:
       XDG_DATA_HOME: $SNAP/usr/share
       FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
       FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
-      HOME: $SNAP_USER_DATA
     plugs:
       - desktop
       - desktop-legacy

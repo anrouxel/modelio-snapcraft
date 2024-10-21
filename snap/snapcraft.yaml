@@ -26,7 +26,7 @@ layout:
 apps:
   modelio:
     extensions: [gnome]
-    command: modelio -Duser.home=$SNAP_USER_DATA
+    command: modelio -duser.home=$SNAP_USER_DATA
     environment:
       XDG_DATA_HOME: $SNAP/usr/share
       FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d

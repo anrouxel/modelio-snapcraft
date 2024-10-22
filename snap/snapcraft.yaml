@@ -26,11 +26,12 @@ layout:
 apps:
   modelio:
     extensions: [gnome]
-    command: modelio -workspace $SNAP_USER_COMMON/workspace -configuration $SNAP_USER_DATA/.modelio
+    command: modelio
     environment:
       XDG_DATA_HOME: $SNAP/usr/share
       FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
       FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
+      JAVA_OPTS: -Djava.util.prefs.userRoot="$SNAP_USER_DATA"
     plugs:
       - desktop
       - desktop-legacy

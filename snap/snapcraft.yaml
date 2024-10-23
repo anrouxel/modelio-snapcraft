@@ -40,6 +40,8 @@ apps:
       - unity7
       - wayland
       - x11
+      - network
+      - network-bind
 
 parts:
   modelio:

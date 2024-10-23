@@ -3,7 +3,7 @@
   <br />
 </h1>
 
-<p align="center"><b>This is the snap for Modelio</b>, It is a community-maintained package to easily install Blockbench on Ubuntu, Fedora, Debian and other major Linux distributions. It is available in the Snap Store, Ubuntu Software, and a number of other applications.</p>
+<p align="center"><b>This is the snap for Modelio</b>, It is a community-maintained package to easily install Modelio on Ubuntu, Fedora, Debian and other major Linux distributions. It is available in the Snap Store, Ubuntu Software, and a number of other applications.</p>
 
 <p align="center"><i>"Modelio is a modeling solution offering a wide range of functionalities based on the main standards of enterprise architecture, software development and systems engineering."</i></p>
 

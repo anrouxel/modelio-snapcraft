@@ -31,7 +31,6 @@ apps:
       XDG_DATA_HOME: $SNAP/usr/share
       FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
       FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
-      JAVA_OPTS: -Djava.util.prefs.userRoot="$SNAP_USER_DATA"
     plugs:
       - desktop
       - desktop-legacy
@@ -42,7 +41,7 @@ apps:
       - wayland
       - x11
 
-parts:     
+parts:
   modelio:
     plugin: dump
     source: https://github.com/ModelioOpenSource/Modelio/releases/download/v$SNAPCRAFT_PROJECT_VERSION/modelio-open-source-$SNAPCRAFT_PROJECT_VERSION_amd64.deb
@@ -58,3 +57,4 @@ parts:
       craftctl default
       cd $SNAPCRAFT_PART_INSTALL
       ln -s usr/lib/modelio-open-source*/modelio.sh modelio
+      sed -i '/"${MODELIO_PATH}\/modelio"/ s/$/ -vmargs -Duser.home=$SNAP_USER_DATA/' usr/lib/modelio-open-source*/modelio.sh

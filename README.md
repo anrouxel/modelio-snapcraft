@@ -7,6 +7,15 @@
 
 <p align="center"><i>"Modelio is a modeling solution offering a wide range of functionalities based on the main standards of enterprise architecture, software development and systems engineering."</i></p>
 
+<p align="center">
+<a href="https://snapcraft.io/modelio">
+  <img alt="modelio" src="https://snapcraft.io/modelio/badge.svg" />
+</a>
+<a href="https://snapcraft.io/modelio">
+  <img alt="modelio" src="https://snapcraft.io/modelio/trending.svg?name=0" />
+</a>
+</p>
+
 ## Install
 
 ```shell

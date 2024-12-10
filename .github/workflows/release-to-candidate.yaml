@@ -29,27 +29,26 @@ jobs:
         uses: snapcrafters/ci/get-architectures@main
 
   release:
-    name: 🚢 Release to latest/edge
+    name: 🚢 Release to latest/candidate
     needs: get-architectures
     runs-on: ubuntu-latest
-    environment: "Edge Branch"
+    environment: "Candidate Branch"
     strategy:
       matrix:
         architecture: ${{ fromJSON(needs.get-architectures.outputs.architectures-list) }}
     steps:
-      - name: 🚢 Release to latest/edge
+      - name: 🚢 Release to latest/candidate
         uses: snapcrafters/ci/release-to-candidate@main
         with:
           architecture: ${{ matrix.architecture }}
           launchpad-token: ${{ secrets.LP_BUILD_SECRET }}
           repo-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
           store-token: ${{ secrets.SNAP_STORE }}
-          channel: latest/edge
   
   call-for-testing:
     name: 📣 Create call for testing
     needs: [release, get-architectures]
-    environment: "Edge Branch"
+    environment: "Candidate Branch"
     runs-on: ubuntu-latest
     outputs:
       issue-number: ${{ steps.issue.outputs.issue-number }}
@@ -60,12 +59,11 @@ jobs:
         with:
           architectures: ${{ needs.get-architectures.outputs.architectures }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          channel: latest/edge
 
   screenshots:
     name: 📸 Gather screenshots
     needs: call-for-testing
-    environment: "Edge Branch"
+    environment: "Candidate Branch"
     runs-on: ubuntu-latest
     steps:
       - name: 📸 Gather screenshots
@@ -75,4 +73,3 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           screenshots-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
           screenshots-repo: anrouxel/ci-screenshots
-          channel: latest/edge

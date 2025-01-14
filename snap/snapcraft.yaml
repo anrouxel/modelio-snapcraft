@@ -55,6 +55,15 @@ parts:
       - libgtk-3-0
       - libproxy1v5
       - libproxy-tools
+      - libffi8
+      - libfreetype6
+      - libpng16-16t64
+      - libgdk-pixbuf2.0-0
+      - libsecret-1-0
+      - libasound2
+      - libxi6
+      - libxrender1
+      - libxtst6
     override-build: |
       craftctl default
       cd $SNAPCRAFT_PART_INSTALL

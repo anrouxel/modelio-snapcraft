@@ -6,7 +6,7 @@ description: |
 icon: snap/gui/modelio.png
 license: GPL-3.0
 
-base: core24
+base: core22
 grade: stable
 confinement: strict
 adopt-info: modelio
@@ -53,22 +53,19 @@ parts:
     source: https://github.com/ModelioOpenSource/Modelio/releases/download/v$SNAPCRAFT_PROJECT_VERSION/modelio-open-source-$SNAPCRAFT_PROJECT_VERSION_amd64.deb
     source-type: deb
     stage-packages:
-      - libffi8
-      - libfreetype6
-      - libpng16-16t64
-      - libgdk-pixbuf2.0-0
-      - libsecret-1-0
-      - libasound2
-      - libxi6
-      - libxrender1
-      - libxtst6
       - libxss1
+      - libgconf-2-4
       - libcurl4
       - xdg-utils
+      - mariadb-client
+      - mysql-client
+      - postgresql-client-common
       - ibus-gtk3
       - libibus-1.0-5
+      - libwebkit2gtk-4.0-37
       - libgtk-3-0
-      - libwebkit2gtk-4.1-0
+      - fonts-noto-cjk
+      - fonts-noto-color-emoji
     override-build: |
       craftctl default
       cd $SNAPCRAFT_PART_INSTALL

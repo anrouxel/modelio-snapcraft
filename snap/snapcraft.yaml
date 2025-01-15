@@ -67,7 +67,7 @@ parts:
       - libxi6
       - libxrender1
       - libxtst6
-      - libwebkit2gtk-4.0-37
+      - libwebkit2gtk-4.1-0
     override-build: |
       craftctl default
       cd $SNAPCRAFT_PART_INSTALL

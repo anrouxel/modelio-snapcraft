@@ -31,7 +31,7 @@ apps:
       XDG_DATA_HOME: $SNAP/usr/share
       FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
       FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
-      _JAVA_OPTIONS: -Duser.home=$SNAP_USER_DATA -Dorg.eclipse.swt.browser.DefaultType=webkit -Dorg.eclipse.swt.browser.UseWebKitGTK=true
+      _JAVA_OPTIONS: -Duser.home=$SNAP_USER_DATA -Dorg.eclipse.swt.browser.DefaultType=chromium
       # Fallback to XWayland if running in a Wayland session.
       DISABLE_WAYLAND: 1
     plugs:
@@ -73,4 +73,4 @@ parts:
       craftctl default
       cd $SNAPCRAFT_PART_INSTALL
       ln -s usr/lib/modelio-open-source*/modelio.sh modelio
-      sed -i '/"${MODELIO_PATH}\/modelio"/ s/$/ -vmargs -Duser.home=$SNAP_USER_DATA -Dorg.eclipse.swt.browser.DefaultType=webkit -Dorg.eclipse.swt.browser.UseWebKitGTK=true' usr/lib/modelio-open-source*/modelio.sh
+      sed -i '/"${MODELIO_PATH}\/modelio"/ s/$/ -vmargs -Duser.home=$SNAP_USER_DATA -Dorg.eclipse.swt.browser.DefaultType=chromium' usr/lib/modelio-open-source*/modelio.sh

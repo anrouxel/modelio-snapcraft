@@ -12,8 +12,8 @@ confinement: strict
 adopt-info: modelio
 compression: lzo
 
-platforms:
-  amd64:
+architectures:
+  - build-on: amd64
 
 layout:
   /etc/fonts:

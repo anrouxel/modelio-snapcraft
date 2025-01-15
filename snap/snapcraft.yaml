@@ -31,8 +31,9 @@ apps:
       XDG_DATA_HOME: $SNAP/usr/share
       FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
       FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
-      __NV_PRIME_RENDER_OFFLOAD: 1
-      WEBKIT_DISABLE_COMPOSITING_MODE: 1
+      _JAVA_OPTIONS: -Duser.home=$SNAP_USER_DATA -Dorg.eclipse.swt.browser.DefaultType=webkit -Dorg.eclipse.swt.browser.UseWebKitGTK=true
+      # Fallback to XWayland if running in a Wayland session.
+      DISABLE_WAYLAND: 1
     plugs:
       - desktop
       - desktop-legacy
@@ -52,14 +53,6 @@ parts:
     source: https://github.com/ModelioOpenSource/Modelio/releases/download/v$SNAPCRAFT_PROJECT_VERSION/modelio-open-source-$SNAPCRAFT_PROJECT_VERSION_amd64.deb
     source-type: deb
     stage-packages:
-      - libproxy1-plugin-gsettings
-      - libproxy1-plugin-networkmanager
-      - libatk-adaptor
-      - libgtk2.0-0
-      - libgtk-3-0
-      - libgtk-4-1
-      - libproxy1v5
-      - libproxy-tools
       - libffi8
       - libfreetype6
       - libpng16-16t64
@@ -69,14 +62,16 @@ parts:
       - libxi6
       - libxrender1
       - libxtst6
+      - libxss1
+      - libgconf-2-4
+      - libcurl4
+      - xdg-utils
+      - ibus-gtk3
+      - libibus-1.0-5
+      - libgtk-3-0
       - libwebkit2gtk-4.1-0
-      - gir1.2-webkit2-4.1
-      - libwebkitgtk-6.0-4
-      - libswt-webkit-gtk-4-jni
-      - webkit2gtk-driver
-      - gir1.2-webkit-6.0
     override-build: |
       craftctl default
       cd $SNAPCRAFT_PART_INSTALL
       ln -s usr/lib/modelio-open-source*/modelio.sh modelio
-      sed -i '/"${MODELIO_PATH}\/modelio"/ s/$/ -vmargs -Duser.home=$SNAP_USER_DATA/' usr/lib/modelio-open-source*/modelio.sh
+      sed -i '/"${MODELIO_PATH}\/modelio"/ s/$/ -vmargs -Duser.home=$SNAP_USER_DATA -Dorg.eclipse.swt.browser.DefaultType=webkit -Dorg.eclipse.swt.browser.UseWebKitGTK=true' usr/lib/modelio-open-source*/modelio.sh

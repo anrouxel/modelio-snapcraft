@@ -6,14 +6,14 @@ description: |
 icon: snap/gui/modelio.png
 license: GPL-3.0
 
-base: core24
+base: core22
 grade: stable
 confinement: strict
 adopt-info: modelio
 compression: lzo
 
-platforms:
-  amd64:
+architectures:
+  - build-on: amd64
 
 layout:
   /etc/fonts:
@@ -22,26 +22,49 @@ layout:
     bind: $SNAP/usr/share/fonts
   /var/cache/fontconfig:
     bind: $SNAP_DATA/var/cache/fontconfig
+  /usr/share/libdrm:
+    bind: $SNAP/graphics/libdrm
+  /usr/share/drirc.d:
+    symlink: $SNAP/graphics/drirc.d
+  /usr/share/X11/XErrorDB:
+    symlink: $SNAP/graphics/X11/XErrorDB
+  /usr/share/X11/locale:
+    symlink: $SNAP/graphics/X11/locale
+
+
+plugs:
+  graphics-core22:
+    interface: content
+    target: $SNAP/graphics
+    default-provider: mesa-core22
 
 apps:
   modelio:
     extensions: [gnome]
+    command-chain:
+      - bin/graphics-core22-wrapper
     command: modelio
     environment:
       XDG_DATA_HOME: $SNAP/usr/share
       FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
       FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
+      DISABLE_WAYLAND: 1
     plugs:
       - desktop
       - desktop-legacy
       - gsettings
       - home
+      - removable-media
       - opengl
       - unity7
       - wayland
       - x11
       - network
+      - network-status
+      - network-manager
+      - network-manager-observe
       - network-bind
+      - browser-support
 
 parts:
   modelio:
@@ -49,14 +72,33 @@ parts:
     source: https://github.com/ModelioOpenSource/Modelio/releases/download/v$SNAPCRAFT_PROJECT_VERSION/modelio-open-source-$SNAPCRAFT_PROJECT_VERSION_amd64.deb
     source-type: deb
     stage-packages:
-      - libproxy1-plugin-gsettings
-      - libproxy1-plugin-networkmanager
-      - libatk-adaptor
+      - libffi8
+      - libfreetype6
+      - libgdk-pixbuf2.0-0
+      - libsecret-1-0
+      - libasound2
+      - libxi6
+      - libxrender1
+      - libxtst6
+      - libxss1
+      - libcurl4
+      - xdg-utils
+      - ibus-gtk3
+      - libibus-1.0-5
       - libgtk-3-0
-      - libproxy1v5
-      - libproxy-tools
+      - libwebkit2gtk-4.0-37
     override-build: |
       craftctl default
       cd $SNAPCRAFT_PART_INSTALL
       ln -s usr/lib/modelio-open-source*/modelio.sh modelio
       sed -i '/"${MODELIO_PATH}\/modelio"/ s/$/ -vmargs -Duser.home=$SNAP_USER_DATA/' usr/lib/modelio-open-source*/modelio.sh
+
+  graphics-core22:
+    after: [modelio]
+    source: https://github.com/canonical/gpu-snap.git
+    plugin: dump
+    override-prime: |
+      craftctl default
+      ${CRAFT_PART_SRC}/bin/graphics-core22-cleanup mesa-core22 nvidia-core22
+    prime:
+    - bin/graphics-core22-wrapper

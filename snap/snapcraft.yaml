@@ -42,6 +42,7 @@ apps:
       - x11
       - network
       - network-bind
+      - browser-support
 
 parts:
   modelio:

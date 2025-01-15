@@ -69,6 +69,10 @@ parts:
       - libxtst6
       - libwebkit2gtk-4.1-0
       - gir1.2-webkit2-4.1
+      - libwebkitgtk-6.0-4
+      - libswt-webkit-gtk-4-jni
+      - webkit2gtk-driver
+      - gir1.2-webkit-6.0
     override-build: |
       craftctl default
       cd $SNAPCRAFT_PART_INSTALL

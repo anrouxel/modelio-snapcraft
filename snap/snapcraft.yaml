@@ -55,7 +55,7 @@ parts:
       - libproxy1-plugin-gsettings
       - libproxy1-plugin-networkmanager
       - libatk-adaptor
-      - libgtk-3-0
+      - libgtk2.0-0
       - libproxy1v5
       - libproxy-tools
       - libffi8
@@ -67,7 +67,7 @@ parts:
       - libxi6
       - libxrender1
       - libxtst6
-      - libwebkit2gtk-4.1-0
+      - libwebkit2gtk-4.0-37
     override-build: |
       craftctl default
       cd $SNAPCRAFT_PART_INSTALL

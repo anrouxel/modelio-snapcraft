@@ -31,6 +31,8 @@ apps:
       XDG_DATA_HOME: $SNAP/usr/share
       FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
       FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
+      __NV_PRIME_RENDER_OFFLOAD: 1
+      WEBKIT_DISABLE_COMPOSITING_MODE: 1
     plugs:
       - desktop
       - desktop-legacy

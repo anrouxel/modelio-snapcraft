@@ -1,0 +1,22 @@
+name: Enhancement Request
+description: File an enhancement request
+title: "[Enhancement]: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this enhancement request!
+  - type: textarea
+    id: new-features
+    attributes:
+      label: What changes would you like?
+      description: Tell us what you want changed.
+      placeholder: There is a plugin called 'widget' that complements this app. Please consider incorporating it into the snap package...
+    validations:
+      required: true
+  - type: textarea
+    id: extra-info
+    attributes:
+      label: Any extra information?
+      description: If you have anything else to tell us about this feature, type it here.

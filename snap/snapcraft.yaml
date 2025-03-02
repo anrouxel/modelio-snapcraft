@@ -1,15 +1,22 @@
 name: modelio
-version: 5.4.1
-summary: Digital logic design tool and simulator
+title: Modelio
+summary: Modelio the open source modeling environment
 description: |
-  Digital logic design tool and simulator
-icon: snap/gui/modelio.png
+  Modelio is a modeling solution offering a wide range of functionality based on commonly used standards for enterprise architecture, software development and systems engineering.
+
+  Written for developers, analysts and software and systems architects, Modelio is first and foremost a modeling environment, supporting a wide range of models and diagrams and providing many services facilitating the modeling of your architectures, such as as model consistency-checking. Support for modeling and business processes (BPMN) is integrated into Modelio. These BPMN models can be linked to other standards supported by the tool, for example UML, so as to integrate these business processes into a larger context such as an enterprise architecture.
+website: https://www.modelio.org/
+contact: https://github.com/anrouxel/modelio-snapcraft/issues
+issues: https://github.com/anrouxel/modelio-snapcraft/issues
+source-code: https://github.com/anrouxel/modelio-snapcraft
 license: GPL-3.0
+adopt-info: modelio
+icon: snap/gui/modelio.png
+version: 5.4.1
 
 base: core22
 grade: stable
 confinement: strict
-adopt-info: modelio
 compression: lzo
 
 architectures:
@@ -30,7 +37,6 @@ layout:
     symlink: $SNAP/graphics/X11/XErrorDB
   /usr/share/X11/locale:
     symlink: $SNAP/graphics/X11/locale
-
 
 plugs:
   graphics-core22:

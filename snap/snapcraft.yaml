@@ -14,7 +14,7 @@ adopt-info: modelio
 icon: snap/gui/modelio.png
 version: 5.4.1
 
-base: core22
+base: core24
 grade: stable
 confinement: strict
 compression: lzo
@@ -39,22 +39,21 @@ layout:
     symlink: $SNAP/graphics/X11/locale
 
 plugs:
-  graphics-core22:
+  graphics-core24:
     interface: content
     target: $SNAP/graphics
-    default-provider: mesa-core22
+    default-provider: mesa-core24
 
 apps:
   modelio:
     extensions: [gnome]
     command-chain:
-      - bin/graphics-core22-wrapper
+      - bin/graphics-core24-wrapper
     command: modelio
     environment:
       XDG_DATA_HOME: $SNAP/usr/share
       FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
       FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
-      DISABLE_WAYLAND: 1
     plugs:
       - desktop
       - desktop-legacy
@@ -79,32 +78,32 @@ parts:
     source-type: deb
     stage-packages:
       - libffi8
-      - libfreetype6
-      - libgdk-pixbuf2.0-0
-      - libsecret-1-0
-      - libasound2
+      - libfreetype6t64
+      - libgdk-pixbuf-2.0-0t64
+      - libsecret-1-0t64
+      - libasound2t64
       - libxi6
       - libxrender1
       - libxtst6
       - libxss1
-      - libcurl4
+      - libcurl4t64
       - xdg-utils
       - ibus-gtk3
       - libibus-1.0-5
-      - libgtk-3-0
+      - libgtk-3-0t64
       - libwebkit2gtk-4.0-37
     override-build: |
       craftctl default
       cd $SNAPCRAFT_PART_INSTALL
       ln -s usr/lib/modelio-open-source*/modelio.sh modelio
-      sed -i '/"${MODELIO_PATH}\/modelio"/ s/$/ -vmargs -Duser.home=$SNAP_USER_DATA/' usr/lib/modelio-open-source*/modelio.sh
+      sed -i '/"${MODELIO_PATH}\/modelio"/ s/$/ -vmargs -Duser.home=$SNAP_USER_DATA -XX:-UseContainerSupport/' usr/lib/modelio-open-source*/modelio.sh
 
-  graphics-core22:
+  graphics-core24:
     after: [modelio]
     source: https://github.com/canonical/gpu-snap.git
     plugin: dump
     override-prime: |
       craftctl default
-      ${CRAFT_PART_SRC}/bin/graphics-core22-cleanup mesa-core22 nvidia-core22
+      ${CRAFT_PART_SRC}/bin/graphics-core24-cleanup mesa-core24 nvidia-core24
     prime:
-    - bin/graphics-core22-wrapper
+    - bin/graphics-core24-wrapper

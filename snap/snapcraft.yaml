@@ -55,6 +55,8 @@ apps:
       FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
       FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
       DISABLE_WAYLAND: 1
+      WEBKIT_DISABLE_COMPOSITING_MODE: 1
+      WEBKIT_DISABLE_DMABUF_RENDERER: 1
     plugs:
       - desktop
       - desktop-legacy

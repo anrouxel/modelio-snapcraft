@@ -57,6 +57,7 @@ apps:
       DISABLE_WAYLAND: 1
       WEBKIT_DISABLE_COMPOSITING_MODE: 1
       WEBKIT_DISABLE_DMABUF_RENDERER: 1
+      GTK_USE_PORTAL: 0
     plugs:
       - desktop
       - desktop-legacy

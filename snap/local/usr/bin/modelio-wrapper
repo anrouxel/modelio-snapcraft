@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Run the configure hook which sets defaults for any config options
+"${SNAP}/meta/hooks/configure"
+
+# Define an array of JVM options
+opts=(
+    "-vmargs"
+    "-Duser.home=${SNAP_USER_DATA}"
+)
+
+# Run Modelio with the gathered arguments
+exec "${SNAP}/opt/modelio/modelio.sh" "${opts[@]}" "$@"

@@ -12,102 +12,45 @@ source-code: https://github.com/anrouxel/modelio-snapcraft
 license: GPL-3.0
 adopt-info: modelio
 icon: snap/gui/modelio.png
-version: 5.4.1
+version: 6.2.0
 
-base: core22
+base: core24
 grade: stable
 confinement: strict
 compression: lzo
 
-architectures:
-  - build-on: amd64
-
-layout:
-  /etc/fonts:
-    bind: $SNAP/etc/fonts
-  /usr/share/fonts:
-    bind: $SNAP/usr/share/fonts
-  /var/cache/fontconfig:
-    bind: $SNAP_DATA/var/cache/fontconfig
-  /usr/share/libdrm:
-    bind: $SNAP/graphics/libdrm
-  /usr/share/drirc.d:
-    symlink: $SNAP/graphics/drirc.d
-  /usr/share/X11/XErrorDB:
-    symlink: $SNAP/graphics/X11/XErrorDB
-  /usr/share/X11/locale:
-    symlink: $SNAP/graphics/X11/locale
-
-plugs:
-  graphics-core22:
-    interface: content
-    target: $SNAP/graphics
-    default-provider: mesa-core22
+platforms:
+  amd64:
 
 apps:
   modelio:
     extensions: [gnome]
-    command-chain:
-      - bin/graphics-core22-wrapper
-    command: modelio
+    command: usr/bin/modelio-wrapper
     environment:
-      XDG_DATA_HOME: $SNAP/usr/share
-      FONTCONFIG_PATH: $SNAP/etc/fonts/conf.d
-      FONTCONFIG_FILE: $SNAP/etc/fonts/fonts.conf
-      DISABLE_WAYLAND: 1
-      WEBKIT_DISABLE_COMPOSITING_MODE: 1
-      WEBKIT_DISABLE_DMABUF_RENDERER: 1
       GTK_USE_PORTAL: 0
     plugs:
       - desktop
       - desktop-legacy
       - gsettings
       - home
-      - removable-media
       - opengl
       - unity7
       - wayland
       - x11
+      - removable-media
+      - browser-support
       - network
       - network-status
-      - network-manager
-      - network-manager-observe
-      - network-bind
-      - browser-support
 
 parts:
   modelio:
     plugin: dump
-    source: https://github.com/ModelioOpenSource/Modelio/releases/download/v$SNAPCRAFT_PROJECT_VERSION/modelio-open-source-$SNAPCRAFT_PROJECT_VERSION_amd64.deb
-    source-type: deb
-    stage-packages:
-      - libffi8
-      - libfreetype6
-      - libgdk-pixbuf2.0-0
-      - libsecret-1-0
-      - libasound2
-      - libxi6
-      - libxrender1
-      - libxtst6
-      - libxss1
-      - libcurl4
-      - xdg-utils
-      - ibus-gtk3
-      - libibus-1.0-5
-      - libgtk-3-0
-      - libwebkit2gtk-4.0-37
-    override-build: |
-      craftctl default
-      cd $SNAPCRAFT_PART_INSTALL
-      ln -s usr/lib/modelio-open-source*/modelio.sh modelio
-      sed -i '/"${MODELIO_PATH}\/modelio"/ s/$/ -vmargs -Duser.home=$SNAP_USER_DATA/' usr/lib/modelio-open-source*/modelio.sh
+    source: https://github.com/ModelioOpenSource/Modelio/releases/download/v$SNAPCRAFT_PROJECT_VERSION/Modelio-Open-Source-$SNAPCRAFT_PROJECT_VERSION_64_Linux.tgz
+    source-type: tar
+    organize:
+      '*': opt/modelio/
 
-  graphics-core22:
-    after: [modelio]
-    source: https://github.com/canonical/gpu-snap.git
+  local-parts:
     plugin: dump
-    override-prime: |
-      craftctl default
-      ${CRAFT_PART_SRC}/bin/graphics-core22-cleanup mesa-core22 nvidia-core22
-    prime:
-    - bin/graphics-core22-wrapper
+    source: ./snap/local
+    source-type: local

@@ -11,4 +11,4 @@ opts=(
 )
 
 # Run Modelio with the gathered arguments
-exec "${SNAP}/opt/modelio/modelio.sh" "${opts[@]}" "$@"
+exec "${SNAP}/opt/modelio/modelio.sh" "$@" "${opts[@]}"
